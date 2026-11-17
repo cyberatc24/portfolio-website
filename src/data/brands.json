@@ -1,0 +1,74 @@
+[
+  {
+    "file": "aws-lambda.png",
+    "name": "AWS Lambda"
+  },
+  {
+    "file": "amazon-eventbridge.png",
+    "name": "Amazon EventBridge"
+  },
+  {
+    "file": "amazon-s3.png",
+    "name": "Amazon S3"
+  },
+  {
+    "file": "amazon-rds.png",
+    "name": "Amazon RDS"
+  },
+  {
+    "file": "aws-iam.png",
+    "name": "AWS IAM"
+  },
+  {
+    "file": "aws-secrets-manager.png",
+    "name": "AWS Secrets Manager"
+  },
+  {
+    "file": "amazon-cloudwatch.png",
+    "name": "Amazon CloudWatch"
+  },
+  {
+    "file": "amazon-ses.png",
+    "name": "Amazon SES"
+  },
+  {
+    "file": "amazon-sns.png",
+    "name": "Amazon SNS"
+  },
+  {
+    "file": "terraform.svg",
+    "name": "Terraform"
+  },
+  {
+    "file": "python.svg",
+    "name": "Python"
+  },
+  {
+    "file": "gnubash.svg",
+    "name": "Bash"
+  },
+  {
+    "file": "linux.svg",
+    "name": "Linux"
+  },
+  {
+    "file": "docker.svg",
+    "name": "Docker"
+  },
+  {
+    "file": "git.svg",
+    "name": "Git"
+  },
+  {
+    "file": "github.svg",
+    "name": "GitHub"
+  },
+  {
+    "file": "jira.svg",
+    "name": "Jira"
+  },
+  {
+    "file": "claude.svg",
+    "name": "Claude"
+  }
+]

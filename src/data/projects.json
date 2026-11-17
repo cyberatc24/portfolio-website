@@ -1,0 +1,308 @@
+[
+  {
+    "type": "repo",
+    "title": "Automated Data Export Pipeline",
+    "description": "An event-driven AWS pipeline: a monthly EventBridge schedule triggers a Lambda function that reads database credentials from Secrets Manager, queries Amazon RDS inside the VPC, writes the result as a CSV to Amazon S3 and sends it out through Amazon SES. CloudWatch captures the logs and Amazon SNS raises failure notifications. The architecture shown is the diagram published in the repository.",
+    "media": "https://github.com/sontakkevipul/aws-projects/tree/main/AWS%20Lambda%20automation",
+    "role": "Personal project · AWS Lambda automation",
+    "year": "",
+    "category": "AWS Cloud",
+    "also": [
+      "Automation",
+      "Security & Governance"
+    ],
+    "tags": [
+      "EventBridge",
+      "Lambda",
+      "RDS",
+      "S3",
+      "SES",
+      "IAM",
+      "Secrets Manager",
+      "CloudWatch",
+      "SNS"
+    ],
+    "rail": true,
+    "image": "./Asset/img/work/data-export-pipeline.jpg"
+  },
+  {
+    "type": "case",
+    "title": "AWS Multi-Account Health Check & Reporting",
+    "description": "Automation that collects infrastructure and service information across multiple AWS accounts and turns it into scheduled reports: AWS Backup status, AWS Config resources, ACM certificate expiry, EC2 disk space, Personal Health Dashboard notifications, service limits, resource tagging, CloudWatch alerts and resource health checks, delivered by email through Amazon SES.",
+    "media": "https://github.com/sontakkevipul",
+    "linkLabel": "Read on GitHub profile",
+    "note": "Professional work. Described on my GitHub profile; the code is not public.",
+    "role": "Professional work · AWS Cloud Engineer",
+    "year": "",
+    "category": "Automation",
+    "also": [
+      "AWS Cloud",
+      "Security & Governance"
+    ],
+    "tags": [
+      "Lambda",
+      "Python",
+      "IAM",
+      "S3",
+      "SES",
+      "EventBridge",
+      "AWS Config",
+      "AWS Backup",
+      "EC2",
+      "ACM"
+    ],
+    "rail": true,
+    "image": "./Asset/img/work/multi-account-health-check.jpg"
+  },
+  {
+    "type": "case",
+    "title": "AWS Cost Optimization",
+    "description": "Cost optimization across AWS environments: EC2 rightsizing, EC2 and RDS start/stop scheduling automation, identifying underutilized resources, AWS Compute Optimizer recommendations, Savings Plans and resource utilization analysis. Result: AWS infrastructure costs reduced by approximately 60%.",
+    "media": "https://github.com/sontakkevipul",
+    "linkLabel": "Read on GitHub profile",
+    "note": "Professional work. The ~60% figure applies to this initiative only.",
+    "role": "Professional work · ~60% cost reduction",
+    "year": "",
+    "category": "AWS Cloud",
+    "also": [
+      "Automation"
+    ],
+    "tags": [
+      "EC2",
+      "RDS",
+      "Compute Optimizer",
+      "Savings Plans",
+      "Scheduling"
+    ],
+    "rail": true,
+    "image": "./Asset/img/work/cost-optimization.jpg"
+  },
+  {
+    "type": "case",
+    "title": "Terraform Infrastructure Upgrade",
+    "description": "Upgraded Terraform configurations across 15 repositories: Terraform version upgrades, configuration compatibility updates, deployment validation and infrastructure standardization, leaving the infrastructure code easier to maintain.",
+    "media": "https://github.com/sontakkevipul",
+    "linkLabel": "Read on GitHub profile",
+    "note": "Professional work. The repositories are private.",
+    "role": "Professional work · 15 repositories",
+    "year": "",
+    "category": "Infrastructure as Code",
+    "also": [
+      "AWS Cloud"
+    ],
+    "tags": [
+      "Terraform",
+      "AWS",
+      "Git",
+      "CI/CD"
+    ],
+    "rail": true,
+    "image": "./Asset/img/work/terraform-upgrade.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Linux Secrets Manager",
+    "description": "A Bash command-line secrets manager: user registration, username and password authentication with hidden password input, duplicate-username checks, file-based storage and input validation, built with grep and core Linux utilities.",
+    "media": "https://github.com/sontakkevipul/linux-projects/tree/main/01-linux-secrets-manager",
+    "role": "Personal project · Bash",
+    "year": "",
+    "category": "Linux",
+    "also": [
+      "Security & Governance"
+    ],
+    "tags": [
+      "Linux",
+      "Bash",
+      "Shell Scripting",
+      "grep",
+      "File Handling"
+    ],
+    "rail": true,
+    "image": "./Asset/img/work/linux-secrets-manager.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Linux Log File Analyzer",
+    "description": "A Python tool that reads an application log file and counts its ERROR, WARNING and INFO messages.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/log-file-analyzer",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [
+      "Linux"
+    ],
+    "tags": [
+      "Python",
+      "File Handling",
+      "Log Analysis"
+    ],
+    "image": "./Asset/img/work/log-file-analyzer.jpg"
+  },
+  {
+    "type": "case",
+    "title": "Power BI Sales Dashboard",
+    "description": "An interactive Power BI dashboard for sales analysis: KPI tracking, sales analysis, interactive reports and data visualization for data-driven insights.",
+    "media": "",
+    "note": "Described on my GitHub profile; no public file or screenshot yet.",
+    "role": "Analytics project · Power BI",
+    "year": "",
+    "category": "Analytics",
+    "also": [],
+    "tags": [
+      "Power BI",
+      "KPIs",
+      "Data Visualization"
+    ],
+    "image": "./Asset/img/work/powerbi-sales-dashboard.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "ATM Management System",
+    "description": "A menu-driven Python ATM program with PIN authentication, balance checks, deposits and withdrawals.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/atm-management",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Conditions",
+      "Loops",
+      "Input Validation"
+    ],
+    "image": "./Asset/img/work/atm-management.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Student Profile Management",
+    "description": "A Python program that stores and processes student, course, batch and completed-skill information.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/student-profile",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Data Structures",
+      "Functions",
+      "Modules"
+    ],
+    "image": "./Asset/img/work/student-profile.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Password Validator",
+    "description": "Checks whether a password meets defined security rules: 8 to 15 characters with uppercase, lowercase, digit and special-character requirements.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/password-validator",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [
+      "Security & Governance"
+    ],
+    "tags": [
+      "Python",
+      "String Handling",
+      "Validation"
+    ],
+    "image": "./Asset/img/work/password-validator.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Email Validator",
+    "description": "Validates an email address with string operations and conditional logic: exactly one @, a username of at most 15 characters, a dot in the address and no spaces.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/email-validator",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "String Handling",
+      "Validation"
+    ],
+    "image": "./Asset/img/work/email-validator.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Prime Number Checker",
+    "description": "A small Python program that checks whether a number is prime using the modulus operator.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/prime-number-checker",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Loops",
+      "Conditions"
+    ],
+    "image": "./Asset/img/work/prime-number-checker.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Online Shopping Cart",
+    "description": "A Python shopping cart that adds, removes, searches and lists items through a menu.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/online_cart",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Lists",
+      "Menus"
+    ],
+    "image": "./Asset/img/work/online-shopping-cart.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Employee Record Management",
+    "description": "A menu-driven Python program to add, view and search employee records by ID.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/employee-record-management",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Dictionaries",
+      "Menus"
+    ],
+    "image": "./Asset/img/work/employee-record-management.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "CSV Employee Record Management",
+    "description": "Employee records stored in a CSV file: add, view and search by ID with Python's csv module.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/csv-employee-records",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [
+      "Analytics"
+    ],
+    "tags": [
+      "Python",
+      "CSV",
+      "File Handling"
+    ],
+    "image": "./Asset/img/work/csv-employee-records.jpg"
+  },
+  {
+    "type": "repo",
+    "title": "Marks Management",
+    "description": "Calculates subject-wise and total marks, separating internal and external marks, with nested dictionaries and loops.",
+    "media": "https://github.com/sontakkevipul/python-projects/tree/main/marks-management",
+    "role": "Personal project · Python",
+    "year": "",
+    "category": "Python",
+    "also": [],
+    "tags": [
+      "Python",
+      "Nested Dictionaries",
+      "Loops"
+    ],
+    "image": "./Asset/img/work/marks-management.jpg"
+  }
+]
