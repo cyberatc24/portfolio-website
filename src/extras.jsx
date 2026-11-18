@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useMotionValue, useVelocity, useSpring, useTransform, useAnimationFrame, useInView } from 'framer-motion';
-import { ArrowUpRight, ArrowRight, Github, Clock, KeyRound, Database, FileSpreadsheet, Mail, BellRing, Server, ShieldCheck, Code2, PiggyBank, Activity, Plus, Minus } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Github, Award, Radar, ScanSearch, ListOrdered, Wrench, BadgeCheck, Clock, KeyRound, Database, FileSpreadsheet, Mail, BellRing, Server, ShieldCheck, Code2, PiggyBank, Activity, Plus, Minus } from 'lucide-react';
 import archive from './data/projects.json';
-import { MotionContext, EASE, GITHUB } from './shared.js';
+import { MotionContext, EASE, GITHUB, CERTIFICATES } from './shared.js';
 import './extras.css';
 
 const findProject = title => archive.find(p => p.title === title);
@@ -320,5 +320,60 @@ export function BuildInPublic() {
       <p>AWS automation, Python and Bash projects, shared on GitHub as I learn and build, with a growing interest in AI and data analytics.</p>
       <a className="solid-button bip-cta" href={GITHUB} target="_blank" rel="noopener noreferrer"><Github size={18}/>FOLLOW @SONTAKKEVIPUL<ArrowUpRight size={18}/></a>
     </Rise>
+  </section>;
+}
+
+
+/* ── Vulnerability assessment: how weaknesses are found, ranked, fixed and proven fixed (from the resume) ── */
+const vaSteps = [
+  { num: '01', icon: Radar, step: 'Discover', tools: ['AWS Config', 'Organizations', 'Tagging'], text: 'Know what exists before judging it: resources and configuration tracked across 30+ production and non-production accounts.' },
+  { num: '02', icon: ScanSearch, step: 'Detect', tools: ['Amazon Inspector', 'GuardDuty'], text: 'Inspector for vulnerability findings and GuardDuty for threat detection, running continuously rather than once a quarter.' },
+  { num: '03', icon: ListOrdered, step: 'Prioritise', tools: ['Security Hub', 'CloudTrail'], text: 'Findings brought together in Security Hub and triaged by severity, with CloudTrail answering who changed what, and when.' },
+  { num: '04', icon: Wrench, step: 'Remediate', tools: ['IAM policies', 'Security groups', 'Segmentation'], text: 'Close the gaps: least-privilege IAM roles and policies, tighter security groups and basic network segmentation.' },
+  { num: '05', icon: BadgeCheck, step: 'Verify', tools: ['CloudWatch', 'AWS Config', 'Audits'], text: 'Continuous monitoring and compliance validation keep fixes fixed, with audits completed without critical findings.' },
+];
+const vaStats = [['30+', 'AWS ACCOUNTS', 'under continuous monitoring'], ['50+', 'IAM REQUESTS A MONTH', 'access governance via Jira'], ['0', 'CRITICAL FINDINGS', 'in completed compliance audits']];
+
+export function VulnerabilityAssessment() {
+  const enabled = useContext(MotionContext);
+  const scanner = useRef(null);
+  const live = useInView(scanner, { amount: 0.3 });
+  return <section id="security" className="va section-wrap" aria-labelledby="va-title">
+    <div className="va-top">
+      <Rise className="va-copy">
+        <span className="eyebrow">THE SECURITY SIDE</span>
+        <h2 id="va-title">VULNERABILITY <span className="accent">assessment.</span></h2>
+        <p className="va-intro">Security isn’t a one-off scan. Across a multi-account AWS estate I discover what’s running, detect weaknesses and threats, rank them, fix them, and keep proving they stay fixed.</p>
+        <div className="va-stats">{vaStats.map(([n, label, sub]) => <div key={label}><span className="display">{n}</span><p><strong>{label}</strong>{sub}</p></div>)}</div>
+      </Rise>
+      <Rise className="va-visual" delay={0.1}>
+        <div ref={scanner} className={`va-scanner ${live && enabled ? 'is-live' : ''}`} aria-hidden="true">
+          <div className="va-scan-top"><span><i/>CONTINUOUS ASSESSMENT</span><span>INSPECTOR · GUARDDUTY · SECURITY HUB</span></div>
+          <div className="va-grid">{Array.from({ length: 32 }, (_, i) => <span key={i} style={{ '--i': i, '--r': Math.floor(i / 8), '--c': i % 8 }} className={[5, 13, 22, 27].includes(i) ? 'is-flag' : ''}/>)}</div>
+          <span className="va-beam"/>
+          <div className="va-scan-bottom"><span>ACCOUNTS</span><span className="va-legend"><i className="ok"/>COMPLIANT<i className="flag"/>FLAGGED → REMEDIATED</span></div>
+        </div>
+        <span className="va-caption">CONCEPT ILLUSTRATION, NOT LIVE DATA</span>
+      </Rise>
+    </div>
+    <ol className="va-steps">{vaSteps.map((s, i) => { const Icon = s.icon; return <Rise as="li" key={s.num} className="va-step" delay={i * 0.06} onPointerMove={spotlight}>
+      <div className="va-step-top"><span className="va-num">{s.num}</span><span className="va-icon"><Icon size={18}/></span></div>
+      <h3 className="display">{s.step}</h3>
+      <p>{s.text}</p>
+      <div className="va-tools">{s.tools.map(t => <span key={t}>{t}</span>)}</div>
+    </Rise>; })}</ol>
+  </section>;
+}
+
+/* ── Certifications: every card opens the certificates folder on Google Drive ── */
+export function Certifications({ certificates }) {
+  return <section id="certifications" className="certs section-wrap" aria-labelledby="certs-title">
+    <Rise className="section-heading certs-heading"><div><span className="eyebrow">04 / CREDENTIALS</span><h2 id="certs-title">CERTIFIED TO BUILD ON AWS<span className="accent">.</span></h2></div><a className="solid-button certs-all" href={CERTIFICATES} target="_blank" rel="noopener noreferrer"><Award size={17}/>View all certificates<ArrowUpRight size={17}/></a></Rise>
+    <div className="cert-grid">{certificates.map((c, i) => <Rise key={c.title} delay={(i % 4) * 0.06}>
+      <a className="cert-card" href={CERTIFICATES} target="_blank" rel="noopener noreferrer" onPointerMove={spotlight} aria-label={`${c.title}, ${c.issuer}. View the certificate on Google Drive (opens in a new tab)`}>
+        <span className="cert-media"><img src={c.image} alt="" loading="lazy" width="960" height="600"/></span>
+        <span className="cert-body"><span className="cert-num">{String(i + 1).padStart(2, '0')}</span><strong>{c.title}</strong><small>{c.issuer}</small><span className="cert-view">View certificate<ArrowUpRight size={14}/></span></span>
+      </a>
+    </Rise>)}</div>
   </section>;
 }

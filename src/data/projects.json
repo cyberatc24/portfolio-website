@@ -141,10 +141,10 @@
   {
     "type": "case",
     "title": "Power BI Sales Dashboard",
-    "description": "An interactive Power BI dashboard for sales analysis: KPI tracking, sales analysis, interactive reports and data visualization for data-driven insights.",
+    "description": "An interactive Power BI dashboard for sales analysis that integrates data from multiple sources: KPI tracking, interactive reports and data visualization that let stakeholders make data-driven decisions. It contributed to a 15% improvement in sales forecasting accuracy.",
     "media": "",
-    "note": "Described on my GitHub profile; no public file or screenshot yet.",
-    "role": "Analytics project · Power BI",
+    "note": "The report lives in a private Power BI workspace, so there is no public link yet.",
+    "role": "Analytics project · 15% better forecasting",
     "year": "",
     "category": "Analytics",
     "also": [],

@@ -1,52 +1,46 @@
 import React, { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import { motion, AnimatePresence, MotionConfig, useScroll, useTransform, useSpring, useReducedMotion, useMotionValueEvent, useAnimationFrame, useInView } from 'framer-motion';
-import { ArrowUpRight, ArrowDown, ArrowRight, Play, X, Menu, Mail, MapPin, Github, Linkedin, Download, Pause, Search, Plus, Minus, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowRight, Play, X, Menu, Mail, Phone, MapPin, Github, Linkedin, Download, Award, Pause, Search, Plus, Minus, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import archive from './data/projects.json';
 import brands from './data/brands.json';
 import './styles.css';
-import { MotionContext, EASE, GITHUB, LINKEDIN, EMAIL, RESUME } from './shared.js';
-import { Signal, Capabilities, Pipeline, AgentsRail, Spotlight, BuildInPublic } from './extras.jsx';
+import { MotionContext, EASE, GITHUB, LINKEDIN, EMAIL, RESUME, CERTIFICATES, PHONE, CLICK_SOUND } from './shared.js';
+import { Signal, Capabilities, Pipeline, AgentsRail, Spotlight, BuildInPublic, VulnerabilityAssessment, Certifications } from './extras.jsx';
 import { createSwarm, swarmSkipped } from './swarm.js';
 import './swarm.css';
 const LOCATION = 'Pune, Maharashtra, India';
 const categories = ['All', 'AWS Cloud', 'Automation', 'Infrastructure as Code', 'Security & Governance', 'Python', 'Linux', 'Analytics'];
 const inCategory = (p, c) => c === 'All' || p.category === c || (p.also || []).includes(c);
 const featured = ['Automated Data Export Pipeline', 'AWS Multi-Account Health Check & Reporting', 'AWS Cost Optimization'].map(key => archive.find(p => p.title === key)).filter(Boolean);
-// Employment as published on Vipul's own portfolio repository. Verify titles and dates against the resume.
+// Employment, achievements and education from the resume (Asset/resume/Vipul-Sontakke-Resume.pdf).
 const experiences = [
-  { date: '2024 – NOW', title: 'Senior Cloud & AI Engineer', place: 'Tata Consultancy Services (TCS)', text: 'Built a serverless multi-account health auditor that cut audit time from hours to minutes, and led a VMware to Azure VDI migration. Earned the AWS Certified AI Practitioner, Claude Certified Associate (CCAO-F) and IIT Kharagpur AI4ICPS credentials.' },
-  { date: '2022 – 2024', title: 'FinOps & Cloud Automation Lead', place: 'Tata Consultancy Services (TCS)', text: 'Reduced AWS infrastructure costs by about 60% through EC2/RDS scheduling automation, rightsizing, Compute Optimizer and Savings Plans. Upgraded Terraform across 15 repositories and optimised NACLs and VPC endpoints through Terraform. Awarded the Xcelerate Award, ranked 3rd of 40.' },
-  { date: '2021 – 2022', title: 'AWS System Engineer', place: 'Tata Consultancy Services (TCS)', text: 'Managed 30+ production and non-production AWS accounts, established IAM access governance and handled 50+ compliance requests a month. Received On-the-Spot Recognition for teamwork and timely delivery of client requirements.' },
-  { date: 'EDUCATION', title: 'Master’s in Business Analytics', place: 'Sinhgad Institute of Business Administration and Computer Applications, Pune', text: 'Business analytics, data analysis and reporting, the base for my Power BI and data-driven work alongside cloud engineering.' },
-  { date: 'EDUCATION', title: 'B.E. Electrical Engineering', place: 'AISSMS College of Engineering, Pune', text: 'An engineering foundation in systems thinking and analytical problem-solving.' },
+  { date: 'MAY 2021 – NOW', title: 'AWS System Engineer / Cloud Engineer', place: 'Tata Consultancy Services Ltd., Pune', text: 'Manage 30+ AWS accounts across production and non-production with EC2, S3, CloudWatch, AWS Config, CloudFormation and Security Hub. Run IAM access governance for those accounts, handling 50+ Jira requests a month and configuring IAM roles, policies and security groups. Continuous monitoring with GuardDuty, CloudWatch and AWS Config supports compliance validation, with audits completed without critical findings. Cut AWS infrastructure costs by ~60% through rightsizing, EC2/RDS scheduling automation, Compute Optimizer and Savings Plans. Lead cloud optimization initiatives, mentor junior engineers, and work with DevOps, security and application teams on secure, scalable architectures.' },
+  { date: 'KEY ACHIEVEMENTS', title: 'Automation & optimization', place: 'Tata Consultancy Services', text: 'Automated daily health checks with AWS Lambda, IAM and SES, reporting on AWS Backup, notifications, certificates and EC2 disk usage, cutting execution time from hours to minutes. Automated EC2 and RDS start/stop scheduling to reduce cost and manual effort. Improved application performance by ~25% through infrastructure upgrades and optimization. Upgraded Terraform configurations across 15 repositories to the latest version.' },
+  { date: 'KEY ACHIEVEMENTS', title: 'Governance, migration & recognition', place: 'Tata Consultancy Services', text: 'Contributed to cloud governance initiatives and received client appreciation for audit readiness and operational standards. Led the migration of virtual VDI from VMware to Azure VDI: infrastructure assessment, requirements analysis and stakeholder coordination. Received the Xcelerate Award (rank 3 of 40) and On-the-Spot recognition within 16 months.' },
+  { date: 'NOV 2022 – JUN 2024', title: 'Master’s in Business Analytics', place: 'Sinhgad Institute of Business Administration and Computer Applications, Pune', text: 'Business analytics, data analysis and reporting, the base for my Power BI and data-driven work alongside cloud engineering.' },
+  { date: 'JUN 2015 – JUN 2019', title: 'Bachelor’s in Electrical Engineering', place: 'AISSMS College of Engineering, Pune', text: 'An engineering foundation in systems thinking and analytical problem-solving.' },
 ];
+const awards = [
+  { title: 'Xcelerate Award', year: 'RANK 3 OF 40 · AWS TRAINING & PROJECT DELIVERY', image: './Asset/img/credentials/xcelerate-award.jpg', description: 'Received at Tata Consultancy Services for performance in AWS training and project delivery, ranked 3rd among 40 employees.' },
+  { title: 'On-the-Spot Recognition', year: 'WITHIN 16 MONTHS · TEAMWORK & DELIVERY', image: './Asset/img/credentials/on-the-spot.jpg', description: 'Awarded at Tata Consultancy Services within 16 months for teamwork and timely delivery of client requirements.' },
+  { title: 'Client appreciation', year: 'AUDIT READINESS & OPERATIONAL STANDARDS', image: './Asset/img/credentials/client-appreciation.jpg', description: 'Client appreciation for audit readiness and operational standards, from contributing to cloud governance initiatives.' },
+];
+// Every certification opens the certificates folder on Google Drive.
 const certificates = [
-  { title: 'Xcelerate Award', year: 'RANKED 3RD OF 40 · AWS TRAINING & PROJECT DELIVERY', image: './Asset/img/credentials/xcelerate-award.jpg', kind: 'Award' },
-  { title: 'On-the-Spot Recognition', year: 'TEAMWORK & TIMELY CLIENT DELIVERY', image: './Asset/img/credentials/on-the-spot.jpg', kind: 'Award' },
-  { title: 'AWS Certified Solutions Architect – Associate', year: 'AMAZON WEB SERVICES', image: './Asset/img/credentials/aws-solutions-architect.jpg' },
-  { title: 'AWS Certified CloudOps Engineer – Associate', year: 'AMAZON WEB SERVICES', image: './Asset/img/credentials/aws-cloudops-engineer.jpg' },
-  { title: 'AWS Certified AI Practitioner', year: 'AMAZON WEB SERVICES', image: './Asset/img/credentials/aws-ai-practitioner.jpg' },
-  { title: 'Claude Certified Associate – Foundations (CCAO-F)', year: 'ANTHROPIC', image: './Asset/img/credentials/claude-ccao-f.jpg' },
-  { title: 'AI4ICPS Certificate Programme', year: 'IIT KHARAGPUR', image: './Asset/img/credentials/ai4icps.jpg' },
-  { title: 'Lean Six Sigma Green Belt', year: 'CERTIFICATION', image: './Asset/img/credentials/lean-six-sigma.jpg' },
-  { title: 'Google Analytics', year: 'GOOGLE', image: './Asset/img/credentials/google-analytics.jpg' },
-  { title: 'Google Digital Marketing', year: 'GOOGLE', image: './Asset/img/credentials/google-digital-marketing.jpg' },
+  { title: 'AWS Certified Solutions Architect – Associate', issuer: 'Amazon Web Services', image: './Asset/img/credentials/aws-solutions-architect.jpg' },
+  { title: 'AWS Certified CloudOps Engineer – Associate', issuer: 'Amazon Web Services', image: './Asset/img/credentials/aws-cloudops-engineer.jpg' },
+  { title: 'AWS Certified AI Practitioner', issuer: 'Amazon Web Services', image: './Asset/img/credentials/aws-ai-practitioner.jpg' },
+  { title: 'Claude Certified Associate – Foundations (CCAO-F)', issuer: 'Anthropic', image: './Asset/img/credentials/claude-ccao-f.jpg' },
+  { title: 'AI4ICPS Certificate Programme', issuer: 'IIT Kharagpur', image: './Asset/img/credentials/ai4icps.jpg' },
+  { title: 'Lean Six Sigma Green Belt', issuer: 'Certification', image: './Asset/img/credentials/lean-six-sigma.jpg' },
+  { title: 'Google Analytics', issuer: 'Google', image: './Asset/img/credentials/google-analytics.jpg' },
+  { title: 'Google Digital Marketing', issuer: 'Google', image: './Asset/img/credentials/google-digital-marketing.jpg' },
 ];
 
-// The resume button downloads the PDF. If the file has not been added yet it falls back to an email request,
-// so a missing file never shows a 404.
-function useResume() {
-  const [available, setAvailable] = useState(true);
-  useEffect(() => {
-    let alive = true;
-    fetch(RESUME, { method: 'HEAD' }).then(r => { if (alive) setAvailable(r.ok && !(r.headers.get('content-type') || '').includes('text/html')); }).catch(() => {});
-    return () => { alive = false; };
-  }, []);
-  return available
-    ? { href: RESUME, download: 'Vipul-Sontakke-Resume.pdf' }
-    : { href: `mailto:${EMAIL}?subject=${encodeURIComponent('Resume request')}` };
-}
+// One-click resume download for recruiters.
+const RESUME_LINK = { href: RESUME, download: 'Vipul-Sontakke-Resume.pdf' };
+function useResume() { return RESUME_LINK; }
 
 function Reveal({ children, className = '', delay = 0, as = 'div' }) {
   const enabled = useContext(MotionContext);
@@ -125,9 +119,9 @@ function Header({ enabled, onToggle }) {
   const resume = useResume();
   return <header className="site-header">
     <a className="wordmark" href="#home" aria-label="Vipul Sontakke, home">VIPUL<span>.</span></a>
-    <nav className="desktop-nav" aria-label="Main navigation">{[['portfolio', 'Work'], ['about', 'About'], ['experience', 'Journey'], ['contact', 'Contact']].map(([id, label]) => <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>{label}</a>)}</nav>
+    <nav className="desktop-nav" aria-label="Main navigation">{[['portfolio', 'Work'], ['about', 'About'], ['experience', 'Journey'], ['certifications', 'Certifications'], ['contact', 'Contact']].map(([id, label]) => <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>{label}</a>)}</nav>
     <div className="header-actions"><button className="motion-toggle" onClick={onToggle} aria-label={enabled ? 'Pause animation' : 'Turn animation on'} aria-pressed={!enabled}>{enabled ? <Pause size={13} /> : <Play size={13} />}<span>Motion {enabled ? 'on' : 'off'}</span></button><a className="header-cta header-resume" {...resume} aria-label="Download Vipul Sontakke’s resume (PDF)"><Download size={15} /><span>Resume</span></a><a className="header-cta header-github" href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="Vipul Sontakke on GitHub (opens in a new tab)"><Github size={15} /><span>GitHub</span></a><a className="header-contact" href="#contact">Let’s talk <ArrowUpRight size={16} /></a><button className="menu-toggle icon-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}>{open ? <X /> : <Menu />}</button></div>
-    <AnimatePresence>{open && <motion.nav id="mobile-menu" className="mobile-menu" aria-label="Mobile navigation" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>{[['home', 'Home'], ['portfolio', 'Work'], ['about', 'About'], ['experience', 'Journey'], ['contact', 'Contact']].map(([id, label], i) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}><span>0{i + 1}</span>{label}<ArrowUpRight size={18} /></a>)}<div className="mobile-cta"><a className="header-cta header-resume" {...resume} onClick={() => setOpen(false)}><Download size={16} />Download resume</a><a className="header-cta header-github" href={GITHUB} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}><Github size={16} />GitHub</a></div></motion.nav>}</AnimatePresence>
+    <AnimatePresence>{open && <motion.nav id="mobile-menu" className="mobile-menu" aria-label="Mobile navigation" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>{[['home', 'Home'], ['portfolio', 'Work'], ['about', 'About'], ['security', 'Security'], ['experience', 'Journey'], ['certifications', 'Certifications'], ['contact', 'Contact']].map(([id, label], i) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}><span>0{i + 1}</span>{label}<ArrowUpRight size={18} /></a>)}<div className="mobile-cta"><a className="header-cta header-resume" {...resume} onClick={() => setOpen(false)}><Download size={16} />Download resume</a><a className="header-cta header-github" href={GITHUB} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}><Github size={16} />GitHub</a></div></motion.nav>}</AnimatePresence>
   </header>;
 }
 
@@ -250,9 +244,9 @@ function About() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 75%', 'end 75%'] });
   return <section id="about" className="about section-wrap" ref={ref}>
-    <Reveal className="about-lead"><div><span className="eyebrow">02 / BEHIND THE INFRASTRUCTURE</span><h2 className="display">SECURE BY DEFAULT.<br/>AUTOMATED BY <span className="accent">DESIGN.</span></h2></div><p>I’m Vipul Sontakke, an AWS Cloud Engineer in Pune with 5+ years managing AWS infrastructure across 30+ production and non-production accounts. I look after security and IAM governance, compliance and audit readiness, automate the repetitive work with Lambda, Terraform, Python and Bash, and keep costs down: one optimization initiative cut AWS infrastructure costs by about 60%. Alongside the cloud, I’m drawn to data analytics and AI.</p></Reveal>
+    <Reveal className="about-lead"><div><span className="eyebrow">02 / BEHIND THE INFRASTRUCTURE</span><h2 className="display">SECURE BY DEFAULT.<br/>AUTOMATED BY <span className="accent">DESIGN.</span></h2></div><p>I’m Vipul Sontakke, an AWS Cloud Engineer in Pune with 5+ years managing AWS infrastructure across 30+ production and non-production accounts. I look after security, IAM governance and compliance (audits completed without critical findings), automate the repetitive work with Lambda, Terraform, Python and Bash, and keep costs down: optimization work cut AWS infrastructure costs by about 60% and improved application performance by about 25%. Alongside the cloud, I’m drawn to data analytics and AI.</p></Reveal>
     <div className="studio-grid">
-      <Reveal className="education-panel"><h3 className="panel-heading">ROLE & EDUCATION</h3><p className="eyebrow accent">RIGHT NOW</p><div className="education-row"><strong>AWS Cloud Engineer</strong><span>TCS</span><p>Multi-account AWS operations, security & governance, automation and cost.</p></div><div className="education-row"><strong>Master’s, Business Analytics</strong><span>Pune</span><p>Sinhgad Institute of Business Administration and Computer Applications.</p></div><div className="education-row"><strong>B.E., Electrical Engineering</strong><span>Pune</span><p>AISSMS College of Engineering.</p></div><p className="eyebrow accent skills-heading">TOOLKIT</p><div className="skill-tags">{['EC2 · VPC · S3 · RDS', 'IAM & Organizations', 'Lambda & EventBridge', 'CloudWatch & CloudTrail', 'Config · GuardDuty · Security Hub', 'Terraform', 'CloudFormation', 'Python', 'Bash & Linux', 'Docker', 'Git & CI/CD', 'Power BI'].map(s => <span key={s}>{s}</span>)}</div><div className="software-row">{[['aws-lambda.png', 'AWS Lambda'], ['terraform.svg', 'Terraform'], ['python.svg', 'Python'], ['linux.svg', 'Linux'], ['docker.svg', 'Docker'], ['claude.svg', 'Claude']].map(([file, name]) => <img key={file} src={`./Asset/svg/${file}`} alt={name} title={name} loading="lazy" width="28" height="28"/>)}</div></Reveal>
+      <Reveal className="education-panel"><h3 className="panel-heading">ROLE & EDUCATION</h3><p className="eyebrow accent">RIGHT NOW</p><div className="education-row"><strong>AWS System Engineer / Cloud Engineer</strong><span>TCS · 2021–NOW</span><p>Multi-account AWS operations, security & governance, automation and cost.</p></div><div className="education-row"><strong>Master’s, Business Analytics</strong><span>2022–2024</span><p>Sinhgad Institute of Business Administration and Computer Applications.</p></div><div className="education-row"><strong>B.E., Electrical Engineering</strong><span>2015–2019</span><p>AISSMS College of Engineering.</p></div><p className="eyebrow accent skills-heading">TOOLKIT</p><div className="skill-tags">{['EC2 · VPC · S3 · RDS', 'IAM & Organizations', 'Lambda & EventBridge', 'CloudWatch & CloudTrail', 'Config · GuardDuty · Security Hub', 'Terraform', 'CloudFormation', 'Python', 'Bash & Linux', 'Docker', 'Git & CI/CD', 'Power BI'].map(s => <span key={s}>{s}</span>)}</div><div className="software-row">{[['aws-lambda.png', 'AWS Lambda'], ['terraform.svg', 'Terraform'], ['python.svg', 'Python'], ['linux.svg', 'Linux'], ['docker.svg', 'Docker'], ['claude.svg', 'Claude']].map(([file, name]) => <img key={file} src={`./Asset/svg/${file}`} alt={name} title={name} loading="lazy" width="28" height="28"/>)}</div></Reveal>
       <div className="process-panel"><Reveal><h3 className="panel-heading">HOW I RUN A CLOUD</h3></Reveal><div className="process-list"><div className="process-track"><motion.div style={{ scaleY: enabled ? scrollYProgress : 1 }}/></div>{processSteps.map(([num, title, text], i) => <Reveal key={num} className="process-row" delay={i * 0.035}><span className="process-num display">{num}</span><span className="process-node"/><div><h4>{title}</h4><p>{text}</p></div></Reveal>)}</div></div>
       <Reveal className="quote-panel"><span className="quote-mark display">“</span><blockquote>Secure it.<br/>Automate it.<br/><em>Never leave<br/>it wasteful.</em></blockquote><span className="handwriting">Vipul</span><div className="quote-bottom">LET’S BUILD<br/>SOMETHING RELIABLE.<span className="quote-symbol" aria-hidden="true">✳</span></div></Reveal>
     </div>
@@ -265,8 +259,22 @@ function Journey({ onProject }) {
   return <section id="experience" className="journey section-wrap">
     <Reveal className="section-heading"><div><span className="eyebrow">03 / THE JOURNEY</span><h2>5+ YEARS. 30+ ACCOUNTS. ONE CLOUD<span className="accent">.</span></h2></div><a className="text-link" {...resume}>DOWNLOAD RESUME<Download size={16}/></a></Reveal>
     <div className="journey-grid"><div className="experience-list">{experiences.map((job, i) => <Reveal className={`experience-row ${open === i ? 'is-open' : ''}`} key={job.title + job.place}><button aria-expanded={open === i} aria-controls={`job-${i}`} onClick={() => setOpen(open === i ? null : i)}><span className="experience-date">{job.date}</span><span><h3>{job.title}</h3><span className="experience-place">{job.place}</span></span>{open === i ? <Minus size={18}/> : <Plus size={18}/>}</button><AnimatePresence initial={false}>{open === i && <motion.div id={`job-${i}`} initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35, ease: EASE }}><p>{job.text}</p></motion.div>}</AnimatePresence></Reveal>)}</div>
-    <Reveal className="awards-panel"><p className="eyebrow">AWARDS & CERTIFICATIONS</p><h3 className="display">CERTIFIED.<br/><span className="accent">RECOGNISED.</span></h3><div className="award-list">{certificates.map((cert, i) => <button key={cert.title} onClick={() => onProject({ ...cert, type: 'image', media: '', category: cert.kind || 'Certification', role: cert.year, description: cert.kind === 'Award' ? 'Awarded at Tata Consultancy Services.' : 'A professional certification held by Vipul Sontakke.', note: 'Illustrative card, not the issuer’s official badge.' })}><span>{String(i + 1).padStart(2, '0')}</span><span>{cert.title}<small>{cert.year}</small></span><ArrowUpRight size={19}/></button>)}</div></Reveal></div>
+    <Reveal className="awards-panel"><p className="eyebrow">AWARDS & RECOGNITION</p><h3 className="display">RANKED.<br/><span className="accent">RECOGNISED.</span></h3><div className="award-list is-single">{awards.map((award, i) => <button key={award.title} onClick={() => onProject({ ...award, type: 'image', media: '', category: 'Award', role: award.year, note: 'Illustrative card, not an official certificate.' })}><span>{String(i + 1).padStart(2, '0')}</span><span>{award.title}<small>{award.year}</small></span><ArrowUpRight size={19}/></button>)}</div><a className="text-link awards-certs-link" href="#certifications">SEE CERTIFICATIONS<ArrowRight size={16}/></a></Reveal></div>
   </section>;
+}
+
+// Always-there shortcuts once the hero is out of view: GitHub and the resume.
+function FloatingDock() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.6);
+    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return <AnimatePresence>{show && <motion.div className="float-dock" initial={{ opacity: 0, y: 24, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.9 }} transition={{ duration: 0.35, ease: EASE }}>
+    <a className="float-btn float-resume" {...useResume()} aria-label="Download Vipul Sontakke’s resume (PDF)"><Download size={18}/><span>Resume</span></a>
+    <a className="float-btn float-github" href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="Vipul Sontakke on GitHub (opens in a new tab)"><Github size={19}/><span>GitHub</span></a>
+  </motion.div>}</AnimatePresence>;
 }
 
 function Contact({ onProject }) {
@@ -279,8 +287,8 @@ function Contact({ onProject }) {
     setSent(true);
   };
   return <section id="contact" className="contact section-wrap">
-    <div className="contact-grid"><Reveal className="contact-intro"><span className="eyebrow">04 / GET IN TOUCH</span><h2 className="display">LET’S WORK<br/>TOGETHER<span className="accent">.</span></h2><p>Have a cloud to secure,<br/>automate or optimise?</p><Magnetic href={`mailto:${EMAIL}`} className="contact-cta"><span className="round-arrow"><ArrowUpRight size={21}/></span>START A CONVERSATION</Magnetic></Reveal>
-    <Reveal className="contact-links" delay={0.1}><a href={`mailto:${EMAIL}`}><Mail/><span><small>EMAIL</small>{EMAIL}</span><ArrowUpRight size={16}/></a><a href={GITHUB} target="_blank" rel="noopener noreferrer"><Github/><span><small>GITHUB</small>@sontakkevipul</span><ArrowUpRight size={16}/></a><a href={LINKEDIN} target="_blank" rel="noopener noreferrer"><Linkedin/><span><small>LINKEDIN</small>in/vipul-sontakke</span><ArrowUpRight size={16}/></a><div><MapPin/><span><small>BASED IN</small>{LOCATION}</span></div></Reveal>
+    <div className="contact-grid"><Reveal className="contact-intro"><span className="eyebrow">05 / GET IN TOUCH</span><h2 className="display">LET’S WORK<br/>TOGETHER<span className="accent">.</span></h2><p>Have a cloud to secure,<br/>automate or optimise?</p><Magnetic href={`mailto:${EMAIL}`} className="contact-cta"><span className="round-arrow"><ArrowUpRight size={21}/></span>START A CONVERSATION</Magnetic></Reveal>
+    <Reveal className="contact-links" delay={0.1}><a href={`mailto:${EMAIL}`}><Mail/><span><small>EMAIL</small>{EMAIL}</span><ArrowUpRight size={16}/></a><a href={GITHUB} target="_blank" rel="noopener noreferrer"><Github/><span><small>GITHUB</small>@sontakkevipul</span><ArrowUpRight size={16}/></a><a href={`tel:${PHONE.replace(/\s/g, '')}`}><Phone/><span><small>PHONE</small>{PHONE}</span><ArrowUpRight size={16}/></a><a href={LINKEDIN} target="_blank" rel="noopener noreferrer"><Linkedin/><span><small>LINKEDIN</small>in/vipul-sontakke</span><ArrowUpRight size={16}/></a><div><MapPin/><span><small>BASED IN</small>{LOCATION}</span></div></Reveal>
     <Reveal className="contact-reel" delay={0.2}><button onClick={() => onProject(featured[0])} aria-label="Open the Automated Data Export Pipeline project"><div className="reel-screen"><span className="reel-screen-top">VIPUL.<span>FEATURED / PROJECT</span></span><MediaImage src={featured[0]?.image} alt="Automated Data Export Pipeline architecture"/><span className="reel-screen-title display">SECURE.<br/><span>AUTOMATED.</span></span><span className="play-circle"><Play size={18} fill="currentColor"/></span></div><span className="reel-caption">EVENTBRIDGE → LAMBDA → RDS → S3 → SES</span></button></Reveal></div>
     <Reveal><details className="project-brief"><summary>Send me a message <Plus size={19}/></summary><form onSubmit={send}><label>Your name<input name="name" required placeholder="Name or company" autoComplete="name" maxLength="100"/></label><label>Topic<select name="type"><option>AWS cloud engineering role</option><option>Cloud security & IAM governance</option><option>Infrastructure automation & Terraform</option><option>AWS cost optimization</option><option>Something else</option></select></label><label className="brief-message">Message<textarea name="message" required rows="3" placeholder="What you’re working on and how I can help…" maxLength="3000"/></label><button className="solid-button" type="submit">Continue to email <ArrowUpRight size={18}/></button><p className="form-note" role="status">{sent ? 'Your message is ready in your email app. Press Send there to deliver it.' : `Your message opens as a draft email to ${EMAIL}.`}</p></form></details></Reveal>
   </section>;
@@ -339,10 +347,35 @@ function ProjectDialog({ project, onClose }) {
   </motion.div>;
 }
 
+// Plays CLICK_SOUND on every click through Web Audio, so it starts instantly and can overlap.
+function useClickSound(name) {
+  useEffect(() => {
+    if (!name) return;
+    let ctx, buffer;
+    const load = async () => {
+      try {
+        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+        if (!buffer) buffer = await ctx.decodeAudioData(await (await fetch(`./Asset/sound/${name}.wav`)).arrayBuffer());
+      } catch {}
+    };
+    const play = () => {
+      load().then(() => {
+        if (!ctx || !buffer) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        const src = ctx.createBufferSource(), gain = ctx.createGain();
+        gain.gain.value = 0.6; src.buffer = buffer; src.connect(gain).connect(ctx.destination); src.start();
+      });
+    };
+    window.addEventListener('pointerdown', play, { passive: true });
+    return () => { window.removeEventListener('pointerdown', play); ctx?.close(); };
+  }, [name]);
+}
+
 function App() {
   const reduced = useReducedMotion();
   const [motionOn, setMotionOn] = useState(() => { try { return localStorage.getItem('vs-motion') !== 'off'; } catch { return true; } });
   const enabled = motionOn && !reduced;
+  useClickSound(CLICK_SOUND);
   const [project, setProject] = useState(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 28, restDelta: 0.001 });
@@ -367,12 +400,15 @@ function App() {
         <Breakdown/>
         <About/>
         <Pipeline/>
+        <VulnerabilityAssessment/>
         <AgentsRail onProject={setProject}/>
         <Spotlight onProject={setProject}/>
         <Journey onProject={setProject}/>
+        <Certifications certificates={certificates}/>
         <BuildInPublic/>
         <Contact onProject={setProject}/>
       </main>
+      <FloatingDock/>
       <footer className="footer">
         <a className="wordmark" href="#home">VIPUL<span>.</span></a>
         <span>© {new Date().getFullYear()} VIPUL SONTAKKE · AWS CLOUD ENGINEER. SECURE. AUTOMATED. NEVER WASTEFUL.</span>
