@@ -33,9 +33,6 @@ const certificates = [
   { title: 'AWS Certified AI Practitioner', issuer: 'Amazon Web Services', image: './Asset/img/credentials/aws-ai-practitioner.jpg' },
   { title: 'Claude Certified Associate – Foundations (CCAO-F)', issuer: 'Anthropic', image: './Asset/img/credentials/claude-ccao-f.jpg' },
   { title: 'AI4ICPS Certificate Programme', issuer: 'IIT Kharagpur', image: './Asset/img/credentials/ai4icps.jpg' },
-  { title: 'Lean Six Sigma Green Belt', issuer: 'Certification', image: './Asset/img/credentials/lean-six-sigma.jpg' },
-  { title: 'Google Analytics', issuer: 'Google', image: './Asset/img/credentials/google-analytics.jpg' },
-  { title: 'Google Digital Marketing', issuer: 'Google', image: './Asset/img/credentials/google-digital-marketing.jpg' },
 ];
 
 // One-click resume download for recruiters.

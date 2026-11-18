@@ -377,3 +377,6 @@ html[data-motion="off"] .va-scanner *{animation:none!important}
 .float-resume:hover{border-color:var(--red);color:var(--red)}
 .float-btn:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 @media(max-width:700px){.float-dock{right:14px;bottom:74px;gap:8px}.float-btn{height:46px;width:46px;padding:0;justify-content:center}.float-btn span{display:none}}
+/* five certifications: one row on wide screens, a centred last card when the grid has two columns */
+@media(min-width:1200px){.cert-grid{grid-template-columns:repeat(5,1fr)}.cert-body strong{font-size:13px}}
+@media(max-width:800px){.cert-grid>:last-child:nth-child(odd){grid-column:1 / -1;justify-self:center;width:calc(50% - 6px)}}
