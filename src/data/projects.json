@@ -2,7 +2,7 @@
   {
     "type": "repo",
     "title": "Automated Data Export Pipeline",
-    "description": "An event-driven AWS pipeline: a monthly EventBridge schedule triggers a Lambda function that reads database credentials from Secrets Manager, queries Amazon RDS inside the VPC, writes the result as a CSV to Amazon S3 and sends it out through Amazon SES. CloudWatch captures the logs and Amazon SNS raises failure notifications. The architecture shown is the diagram published in the repository.",
+    "description": "An event-driven AWS pipeline: a monthly EventBridge schedule triggers a Lambda function that reads database credentials from Secrets Manager, queries Amazon RDS inside the VPC, writes the result as a CSV to Amazon S3 and sends it out through Amazon SES. CloudWatch captures the logs and Amazon SNS raises failure notifications. The architecture is redrawn from the diagram published in the repository, using the official AWS icons.",
     "media": "https://github.com/sontakkevipul/aws-projects/tree/main/AWS%20Lambda%20automation",
     "role": "Personal project · AWS Lambda automation",
     "year": "",
@@ -23,7 +23,7 @@
       "SNS"
     ],
     "rail": true,
-    "image": "./Asset/img/work/data-export-pipeline.jpg"
+    "image": "./Asset/img/work/data-export-pipeline.jpg?v=2"
   },
   {
     "type": "case",
