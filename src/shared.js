@@ -14,4 +14,4 @@ export const CERTIFICATES = 'https://drive.google.com/drive/folders/1bQVuTMYclYd
 export const PHONE = '+91 77748 95018';
 // Click sound played on every click. Set to one of the files in Asset/sound/ (for example '3-mechanical-key'),
 // or '' for no sound.
-export const CLICK_SOUND = '';
+export const CLICK_SOUND = '4-bubble-pop';
