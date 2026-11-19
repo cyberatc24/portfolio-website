@@ -1,0 +1,19 @@
+# Netlify settings for the portfolio. These override the build settings in the Netlify UI.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Long cache for images, sounds and fonts; the resume and the app bundle are revalidated so updates show at once.
+[[headers]]
+  for = "/Asset/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/Asset/resume/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Disposition = "attachment; filename=Vipul-Sontakke-Resume.pdf"
